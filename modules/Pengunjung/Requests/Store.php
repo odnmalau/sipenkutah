@@ -15,7 +15,7 @@ class Store extends FormRequest
     {
         return [
             'no_identitas' => ['required'],
-            'upload_identitas' => ['required'],
+            'foto' => 'image|mimes:png,jpg,jpeg|max:2048',
             'nama_lengkap' => ['required'],
             'jenis_kelamin' => ['required'],
             'alamat' => ['required'],

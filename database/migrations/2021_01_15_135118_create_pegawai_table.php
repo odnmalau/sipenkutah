@@ -16,8 +16,8 @@ class CreatePegawaiTable extends Migration
         Schema::create('pegawai', function (Blueprint $table) {
             $table->bigIncrements('nip');
             $table->string('nama', 100);
-            $table->string('golongan', 20);
-            $table->string('jabatan', 20);
+            $table->string('golongan', 50);
+            $table->string('jabatan', 50);
             $table->text('alamat');
             $table->string('no_telp', 20);
             $table->string('foto', 100)->nullable();

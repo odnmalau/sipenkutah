@@ -2,6 +2,8 @@
 
 namespace Modules\Sipir\Tables;
 
+use Laravolt\Suitable\Columns\Date;
+use Laravolt\Suitable\Columns\Html;
 use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
@@ -10,6 +12,8 @@ use Modules\Sipir\Models\Sipir;
 
 class SipirTableView extends TableView
 {
+    protected $title = 'Data Sipir';
+
     public function source()
     {
         return Sipir::autoSort()->latest()->autoSearch(request('search'))->paginate();
@@ -19,9 +23,9 @@ class SipirTableView extends TableView
     {
         return [
             Numbering::make('No')->sortable(),
-            Text::make('foto'),
             Text::make('nama')->sortable()->searchable(),
             Text::make('no_telp'),
+            Date::make('created_at'),
             RestfulButton::make('modules::sipir'),
         ];
     }

@@ -18,4 +18,9 @@ class Sipir extends Model implements HasMedia
     protected $guarded = [];
 
     protected $searchableColumns = ["nama", "alamat", "no_telp", "foto",];
+
+    public function getTakeImageAttribute()
+    {
+        return "/storage/" . $this->foto;
+    }
 }

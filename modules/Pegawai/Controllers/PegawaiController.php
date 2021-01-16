@@ -3,6 +3,7 @@
 namespace Modules\Pegawai\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 use Modules\Pegawai\Requests\Store;
 use Modules\Pegawai\Requests\Update;
 use Modules\Pegawai\Models\Pegawai;
@@ -22,7 +23,18 @@ class PegawaiController extends Controller
 
     public function store(Store $request)
     {
-        Pegawai::create($request->validated());
+        $attr = $request->validated();
+
+        $foto = request()->file('foto');
+        if ($foto) {
+            $fileName = time().'_'.$foto->getClientOriginalName();
+            $pathToFile = $foto->storeAs("pegawai", $fileName, 'public');
+        } else {
+            $pathToFile = null;
+        }
+
+        $attr['foto'] = $pathToFile;
+        Pegawai::create($attr);
 
         return redirect()->back()->withSuccess('Pegawai saved');
     }
@@ -39,13 +51,27 @@ class PegawaiController extends Controller
 
     public function update(Update $request, Pegawai $pegawai)
     {
-        $pegawai->update($request->validated());
+        $attr = $request->validated();
+
+        $foto = request()->file('foto');
+        if ($foto) {
+            Storage::disk('public')->delete($pegawai->foto);
+            $fileName = time().'_'.$foto->getClientOriginalName();
+            $pathToFile = $foto->storeAs("pegawai", $fileName, 'public');
+        } else {
+            $pathToFile = $pegawai->foto;
+        }
+
+        $attr['foto'] = $pathToFile;
+
+        $pegawai->update($attr);
 
         return redirect()->back()->withSuccess('Pegawai saved');
     }
 
     public function destroy(Pegawai $pegawai)
     {
+        Storage::disk('public')->delete($pegawai->foto);
         $pegawai->delete();
 
         return redirect()->back()->withSuccess('Pegawai deleted');

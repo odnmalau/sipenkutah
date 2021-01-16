@@ -3,6 +3,7 @@
 namespace Modules\Sipir\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 use Modules\Sipir\Requests\Store;
 use Modules\Sipir\Requests\Update;
 use Modules\Sipir\Models\Sipir;
@@ -22,11 +23,18 @@ class SipirController extends Controller
 
     public function store(Store $request)
     {
-        $sipir = Sipir::create($request->validated());
+        $attr = $request->validated();
 
-        if($request->hasFile('foto') && $request->file('foto')->isValid()){
-            $sipir->addMediaFromRequest('foto')->toMediaCollection('sipir');
+        $foto = request()->file('foto');
+        if ($foto) {
+            $fileName = time().'_'.$foto->getClientOriginalName();
+            $pathToFile = $foto->storeAs("sipir", $fileName, 'public');
+        } else {
+            $pathToFile = null;
         }
+
+        $attr['foto'] = $pathToFile;
+        Sipir::create($attr);
 
         return redirect()->back()->withSuccess('Sipir saved');
     }
@@ -43,13 +51,27 @@ class SipirController extends Controller
 
     public function update(Update $request, Sipir $sipir)
     {
-        $sipir->update($request->validated());
+        $attr = $request->validated();
+
+        $foto = request()->file('foto');
+        if ($foto) {
+            Storage::disk('public')->delete($sipir->foto);
+            $fileName = time().'_'.$foto->getClientOriginalName();
+            $pathToFile = $foto->storeAs("sipir", $fileName, 'public');
+        } else {
+            $pathToFile = $sipir->foto;
+        }
+
+        $attr['foto'] = $pathToFile;
+
+        $sipir->update($attr);
 
         return redirect()->back()->withSuccess('Sipir saved');
     }
 
     public function destroy(Sipir $sipir)
     {
+        Storage::disk('public')->delete($sipir->foto);
         $sipir->delete();
 
         return redirect()->back()->withSuccess('Sipir deleted');

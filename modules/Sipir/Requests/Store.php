@@ -17,7 +17,7 @@ class Store extends FormRequest
             'nama' => ['required'],
             'alamat' => ['required'],
             'no_telp' => ['required'],
-            'foto' => [''],
+            'foto' => 'image|mimes:png,jpg,jpeg|max:2048',
         ];
     }
 

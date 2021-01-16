@@ -11,6 +11,8 @@ use Modules\Narapidana\Models\Narapidana;
 
 class NarapidanaTableView extends TableView
 {
+    protected $title = 'Data Narapidana';
+
     public function source()
     {
         return Narapidana::autoSort()->latest()->autoSearch(request('search'))->paginate();
@@ -20,9 +22,9 @@ class NarapidanaTableView extends TableView
     {
         return [
             Numbering::make('No'),
-            Text::make('kewarganegaraan'),
-            Text::make('nama_lengkap')->sortable(),
-            Text::make('perkara')->sortable(),
+            Text::make('no_identitas')->sortable()->searchable(),
+            Text::make('nama_lengkap')->sortable()->searchable(),
+            Text::make('perkara')->sortable()->searchable(),
             Text::make('tgl_masuk')->sortable(),
             Text::make('blok')->sortable(),
             RestfulButton::make('modules::narapidana'),
