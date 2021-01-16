@@ -1,0 +1,21 @@
+@extends('laravolt::layouts.app')
+
+@section('content')
+
+    <x-backlink url="{{ route('modules::pegawai.index') }}"></x-backlink>
+
+    <x-panel title="Detil Pegawai">
+        <table class="ui table definition">
+        <tr><td>Nip</td><td>{{ $pegawai->nip }}</td></tr>
+        <tr><td>Nama</td><td>{{ $pegawai->nama }}</td></tr>
+        <tr><td>Golongan</td><td>{{ $pegawai->golongan }}</td></tr>
+        <tr><td>Jabatan</td><td>{{ $pegawai->jabatan }}</td></tr>
+        <tr><td>Alamat</td><td>{{ $pegawai->alamat }}</td></tr>
+        <tr><td>No Telp</td><td>{{ $pegawai->no_telp }}</td></tr>
+        <tr><td>Foto</td><td>{{ $pegawai->foto }}</td></tr>
+        <tr><td>Created At</td><td>{{ $pegawai->created_at }}</td></tr>
+        <tr><td>Updated At</td><td>{{ $pegawai->updated_at }}</td></tr>
+        </table>
+    </x-panel>
+
+@stop
