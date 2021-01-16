@@ -45,7 +45,7 @@ class PegawaiController extends Controller
                 'timezone' => "Asia/Jakarta",
                 'password' => bcrypt($pegawai['no_telp']),
             ]);
-            $user->assignRole('Sipir');
+            $user->assignRole('Pegawai');
         }
 
         return redirect()->back()->withSuccess('Pegawai saved');

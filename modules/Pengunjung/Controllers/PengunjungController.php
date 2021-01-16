@@ -2,6 +2,7 @@
 
 namespace Modules\Pengunjung\Controllers;
 
+use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Modules\Pengunjung\Requests\Store;
@@ -34,7 +35,18 @@ class PengunjungController extends Controller
         }
 
         $attr['upload_identitas'] = $pathToFile;
-        Pengunjung::create($attr);
+        $pengunjung = Pengunjung::create($attr);
+
+        if ($pengunjung) {
+            $user = User::create([
+                'name' => $pengunjung['nama'],
+                'email' => str_replace(' ', '', strtolower($pengunjung->nama) . '.pengunjung@spkt.com'),
+                'status' => "ACTIVE",
+                'timezone' => "Asia/Jakarta",
+                'password' => bcrypt($pengunjung['no_telp']),
+            ]);
+            $user->assignRole('Pengunjung');
+        }
 
         return redirect()->back()->withSuccess('Pengunjung saved');
     }
