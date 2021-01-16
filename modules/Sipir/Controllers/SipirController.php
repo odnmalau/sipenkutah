@@ -2,6 +2,7 @@
 
 namespace Modules\Sipir\Controllers;
 
+use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Modules\Sipir\Requests\Store;
@@ -34,7 +35,18 @@ class SipirController extends Controller
         }
 
         $attr['foto'] = $pathToFile;
-        Sipir::create($attr);
+        $sipir = Sipir::create($attr);
+
+        if ($sipir) {
+            $user = User::create([
+                'name' => $sipir['nama'],
+                'email' => str_replace(' ', '', strtolower($sipir->nama) . '.sipir@spkt.com'),
+                'status' => "ACTIVE",
+                'timezone' => "Asia/Jakarta",
+                'password' => bcrypt($sipir['no_telp']),
+            ]);
+            $user->assignRole('Sipir');
+        }
 
         return redirect()->back()->withSuccess('Sipir saved');
     }

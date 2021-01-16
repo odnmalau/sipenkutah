@@ -2,6 +2,7 @@
 
 namespace Modules\Pegawai\Controllers;
 
+use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Modules\Pegawai\Requests\Store;
@@ -34,7 +35,18 @@ class PegawaiController extends Controller
         }
 
         $attr['foto'] = $pathToFile;
-        Pegawai::create($attr);
+        $pegawai = Pegawai::create($attr);
+
+        if ($pegawai) {
+            $user = User::create([
+                'name' => $pegawai['nama'],
+                'email' => str_replace(' ', '', strtolower($pegawai->nama) . '.pegawai@spkt.com'),
+                'status' => "ACTIVE",
+                'timezone' => "Asia/Jakarta",
+                'password' => bcrypt($pegawai['no_telp']),
+            ]);
+            $user->assignRole('Sipir');
+        }
 
         return redirect()->back()->withSuccess('Pegawai saved');
     }
