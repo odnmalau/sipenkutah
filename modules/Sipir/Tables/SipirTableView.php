@@ -14,9 +14,11 @@ class SipirTableView extends TableView
 {
     protected $title = 'Data Sipir';
 
+    protected $search = false;
+
     public function source()
     {
-        return Sipir::autoSort()->latest()->autoSearch(request('search'))->paginate();
+        return Sipir::autoSort()->autoFilter()->latest()->autoSearch(request('search'))->paginate();
     }
 
     protected function columns()
@@ -25,7 +27,7 @@ class SipirTableView extends TableView
             Numbering::make('No')->sortable(),
             Text::make('nama')->sortable()->searchable(),
             Text::make('no_telp'),
-            Date::make('created_at'),
+            Date::make('created_at', 'TERDAFTAR')->sortable(),
             RestfulButton::make('modules::sipir'),
         ];
     }

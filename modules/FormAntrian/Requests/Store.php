@@ -14,17 +14,18 @@ class Store extends FormRequest
     public function rules()
     {
         return [
-            'no_antrian' => ['required'],
-            'user_id' => ['required'],
+            'no_antrian' => [''],
             'tgl_kunjungan' => ['required'],
-            'laki-laki' => ['required'],
-            'perempuan' => ['required'],
-            'anak-anak' => ['required'],
-            'total_pengikut' => ['required'],
-            'jenis_barang' => ['required'],
-            'jumlah' => ['required'],
-            'keterangan' => ['required'],
-            'id_napi' => ['required'],
+            'waktu' => [''],
+            'laki-laki' => [''],
+            'perempuan' => [''],
+            'anak-anak' => [''],
+            'total_pengikut' => [''],
+            'jenis_barang' => [''],
+            'jumlah' => [''],
+            'keterangan' => [''],
+            'status' => ['nullable'],
+            'id_napi' => [''],
         ];
     }
 

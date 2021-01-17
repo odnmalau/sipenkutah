@@ -25,7 +25,7 @@ class FormAntrianServiceProvider extends BaseServiceProvider
     {
         app('laravolt.menu.sidebar')->register(function ($menu) {
             $menu->modules
-                ->add('Form Antrian', route('modules::form-antrian.index'))
+                ->add('FormAntrian', route('modules::form-antrian.index'))
                 ->data('icon', 'file alternate outline')
                 ->data('permission', $this->config['permission'] ?? [])
                 ->active('modules/form-antrian/*');

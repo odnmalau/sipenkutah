@@ -2,8 +2,8 @@
 
 namespace Modules\Pengunjung\Tables;
 
+use Laravolt\Suitable\Columns\Checkall;
 use Laravolt\Suitable\Columns\Date;
-use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\TableView;
@@ -13,19 +13,21 @@ class PengunjungTableView extends TableView
 {
     protected $title = 'Data Pengunjung';
 
+    protected $search = false;
+
     public function source()
     {
-        return Pengunjung::autoSort()->latest()->autoSearch(request('search'))->paginate();
+        return Pengunjung::autoSort()->autoFilter()->latest()->autoSearch(request('search'))->paginate();
     }
 
     protected function columns()
     {
         return [
-            Numbering::make('No')->sortable(),
+            Checkall::make('No'),
             Text::make('no_identitas')->sortable()->searchable(),
             Text::make('nama_lengkap')->sortable()->searchable(),
-            Text::make('no_hp')->sortable(),
-            Date::make('created_at'),
+            Text::make('no_hp'),
+            Date::make('created_at', 'TERDAFTAR')->sortable(),
             RestfulButton::make('modules::pengunjung'),
         ];
     }
