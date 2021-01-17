@@ -5,8 +5,8 @@
 
         <div class="x-inspire">
             <div class="x-inspire__content">
-                <div class="ui container text text-center p-3">
-                    @include('laravolt::components.inspire')
+                <div class="ui container text text-center p-3 m-b-5">
+                    @include('laravolt::components.brand')
                 </div>
             </div>
         </div>
@@ -14,13 +14,12 @@
 
         <div class="x-auth">
             <div class="x-auth__content">
-                @include('laravolt::components.brand')
 
-                <div class="ui divider hidden m-b-4"></div>
+                <div class="ui divider hidden"></div>
 
                 @yield('content')
 
-                <div class="ui divider hidden m-b-5"></div>
+                <div class="ui divider hidden"></div>
 
             </div>
         </div>

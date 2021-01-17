@@ -4,7 +4,9 @@ namespace Modules\Pengunjung\Controllers;
 
 use App\Models\User;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Modules\Pengunjung\Mail\AccountInformation;
 use Modules\Pengunjung\Requests\Store;
 use Modules\Pengunjung\Requests\Update;
 use Modules\Pengunjung\Models\Pengunjung;
@@ -39,16 +41,17 @@ class PengunjungController extends Controller
 
         if ($pengunjung) {
             $user = User::create([
-                'name' => $pengunjung['nama'],
-                'email' => str_replace(' ', '', strtolower($pengunjung->nama) . '.pengunjung@spkt.com'),
+                'name' => $pengunjung['nama_lengkap'],
+                'email' => $pengunjung['email'],
                 'status' => "ACTIVE",
                 'timezone' => "Asia/Jakarta",
-                'password' => bcrypt($pengunjung['no_telp']),
+                'password' => bcrypt($pengunjung['no_hp']),
             ]);
             $user->assignRole('Pengunjung');
+            Mail::to($pengunjung['email'])->send(new AccountInformation());
         }
 
-        return redirect()->back()->withSuccess('Pengunjung saved');
+        return redirect('modules/form-antrian/create')->withSuccess('Pengunjung saved');
     }
 
     public function show(Pengunjung $pengunjung)
@@ -87,5 +90,10 @@ class PengunjungController extends Controller
         $pengunjung->delete();
 
         return redirect()->back()->withSuccess('Pengunjung deleted');
+    }
+
+    public function registerPengunjung()
+    {
+        return view('pengunjung::register-pengunjung');
     }
 }

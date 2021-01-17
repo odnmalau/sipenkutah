@@ -44,7 +44,7 @@
     @if(config('laravolt.auth.registration.enable'))
         <div class="ui divider hidden section"></div>
         @lang('laravolt::auth.not_registered_yet?')
-        <a href="{{ route('auth::register') }}" class="link">@lang('laravolt::auth.register_here')</a>
+        <a href="{{ route('register.pengunjung') }}" class="link">@lang('laravolt::auth.register_here')</a>
     @endif
 
 @endsection

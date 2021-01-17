@@ -4,6 +4,9 @@ namespace Modules\FormAntrian\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
+use Modules\FormAntrian\Mail\ConfirmationRejected;
+use Modules\FormAntrian\Mail\ConfirmationSuccess;
 use Modules\FormAntrian\Requests\Store;
 use Modules\FormAntrian\Requests\Update;
 use Modules\FormAntrian\Models\FormAntrian;
@@ -85,9 +88,25 @@ class FormAntrianController extends Controller
 
     public function statusChanges(Request $request)
     {
-        $user = FormAntrian::findOrFail($request->id);
-        $user->status = $request->status;
-        $user->save();
+        $formAntrian = FormAntrian::findOrFail($request->id);
+        $formAntrian->status = $request->status;
+        $formAntrian->save();
+
+        $instance = FormAntrian::all();
+
+        $pass = [
+            'nama_pengunjung' => $instance->pengunjung->name,
+            'nama_napi' => $instance->napi->nama_lengkap,
+            'tgl_kunjungan' => $instance->tgl_kunjungan,
+            'waktu' => $instance->waktu,
+            'no_antrian' => $instance->no_antrian,
+        ];
+
+        if ($request->status == "Ditolak") {
+            Mail::to($instance->pengunjung->email)->send(new ConfirmationRejected($pass));
+        } else {
+            Mail::to($instance->pengunjung->email)->send(new ConfirmationSuccess($pass));
+        }
 
         return response()->json(['message' => 'Status berhasil diperbarui.']);
     }

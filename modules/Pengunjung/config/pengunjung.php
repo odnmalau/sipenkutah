@@ -12,5 +12,5 @@ return [
     'menu' => [
         'enabled' => true,
     ],
-    'permission' => [],
+    'permission' => ['manage-sipir', 'manage-pegawai', 'manage-narapidana', 'manage-pengunjung', 'manage-form-antrian'],
 ];

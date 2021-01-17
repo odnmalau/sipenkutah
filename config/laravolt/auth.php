@@ -15,7 +15,7 @@ return [
         'implementation' => \Laravolt\Platform\Services\UserRegistrar::class,
     ],
     'activation'   => [
-        'enable'        => true,
+        'enable'        => false,
         'status_before' => 'PENDING',
         'status_after'  => 'ACTIVE',
     ],

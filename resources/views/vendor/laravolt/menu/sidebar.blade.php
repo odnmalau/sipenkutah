@@ -10,7 +10,20 @@
                     {{ config('laravolt.ui.brand_name') }}
                 </div>
             </div>
-
+            @if (auth()->user()->hasRole(['Pengunjung']))
+                <div class="ui attached vertical menu fluid" data-role="original-menu">
+                    <div class="item">
+                        <div class="header">Main Menu</div>
+                    </div>
+                    <div class="ui accordion sidebar__accordion m-b-1" data-role="sidebar-accordion">
+                        <a class="title empty active selected" href="{{ route('modules::form-antrian.create') }}" data-parent="Modules">
+                            <i class="left icon file alternate outline"></i>
+                            <span>Formulir Antrian</span>
+                        </a>
+                        <div class="content"></div>
+                    </div>
+                </div>
+            @endif
             @if(!$items->isEmpty())
                 @if(config('laravolt.ui.quick_switcher'))
                     @include('laravolt::quick-switcher.sidebar')
@@ -18,7 +31,6 @@
                 @endif
 
                 <div class="ui attached vertical menu fluid" data-role="original-menu">
-
                     @foreach($items as $item)
                         @if($item->hasChildren())
                             <div class="item">

@@ -15,7 +15,7 @@ class Pengunjung extends Model
 
     protected $guarded = [];
 
-    protected $searchableColumns = ["no_identitas", "upload_identitas", "nama_lengkap", "jenis_kelamin", "alamat", "no_hp",];
+    protected $searchableColumns = ["no_identitas", "upload_identitas", "nama_lengkap", 'email', "jenis_kelamin", "alamat", "no_hp",];
 
     public function getTakeImageAttribute()
     {

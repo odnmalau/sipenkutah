@@ -7,9 +7,9 @@
 
 
     <x-titlebar title="FormAntrian">
-        <x-item>
+        {{-- <x-item>
             <x-link label="Tambah" icon="plus" url="{{ route('modules::form-antrian.create') }}"></x-link>
-        </x-item>
+        </x-item> --}}
     </x-titlebar>
 
     {!! $table !!}

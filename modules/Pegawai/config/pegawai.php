@@ -12,5 +12,5 @@ return [
     'menu' => [
         'enabled' => true,
     ],
-    'permission' => [],
+    'permission' => ['*'],
 ];
