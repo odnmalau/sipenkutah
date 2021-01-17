@@ -10,5 +10,6 @@ Route::group(
     ],
     function () {
         Route::resource('form-antrian', FormAntrianController::class);
+        Route::get('/status-changes', [FormAntrianController::class, 'statusChanges'])->name('statusChanges');
     }
 );

@@ -1,13 +1,20 @@
 	{!! form()->hidden('no_antrian') !!}
-	{!! form()->datepicker('tgl_kunjungan')->label('Tanggal Kunjungan') !!}
-	<div class="field"><label>Waktu</label><select class="ui dropdown search clearable selection" name="waktu">
-		<option value="Sesi Pagi - 09:00 s/d 11:00 WIB">Sesi Pagi - 09:00 s/d 11:00 WIB</option>
-		<option value="Sesi Siang - 13:00 s/d 14:30 WIB">Sesi Siang - 13:00 s/d 14:30 WIB</option>
-	</select></div>
+	<div class="field"><label>Tanggal Kunjungan</label>
+		<div class="ui input left icon calendar" data-calendar-type="date" data-calendar-format="Y-m-d">
+			<i class="icon calendar outline"></i>
+			<input type="text" name="tgl_kunjungan" value="{{ old('tgl_kunjungan') ?? $formAntrian->{'tgl_kunjungan'} }}"></div>
+	</div>
+	<div class="field">
+		<label>Waktu</label>
+		<select class="ui dropdown search clearable selection" name="waktu">
+			<option value="Sesi Pagi - 09:00 s/d 11:00 WIB">Sesi Pagi - 09:00 s/d 11:00 WIB</option>
+			<option value="Sesi Siang - 13:00 s/d 14:30 WIB">Sesi Siang - 13:00 s/d 14:30 WIB</option>
+		</select>
+	</div>
 	<h4 class="ui dividing header centered">Pengikut</h4>
 	<div class="field">
 		<label>Laki-Laki</label>
-		<input type="number" name="laki-laki" value="{{ old('perempuan') ?? $formAntrian->{'laki-laki'} }}">
+		<input type="number" name="laki-laki" value="{{ old('laki-laki') ?? $formAntrian->{'laki-laki'} }}">
 		<div class="ui basic label">
 			Orang
 		</div>
@@ -43,17 +50,20 @@
 	<h4 class="ui dividing header centered"></h4>
 	<div class="field">
 		<label>Nama Napi</label>
-		<select class="ui dropdown search clearable selection" name="napi">
+		<select class="ui dropdown search clearable selection" name="id_napi">
 			@foreach ($narapidana as $napi)
 				<option {{ $napi->id == $formAntrian->napi_id ? 'selected' : '' }} value="{{ $napi->id }}">{{ $napi->nama_lengkap }}</option>
 			@endforeach
 		</select>
 	</div>
 	@if (auth()->user()->hasRole(['Sipir', 'Administrator']))
-		<div class="field"><label>Status</label><select class="ui dropdown search clearable selection" name="status">
-			<option value="Ditolak">Ditolak</option>
-			<option value="Diterima">Diterima</option>
-		</select></div>
+		<div class="field">
+			<label>Status</label>
+			<select class="ui dropdown search clearable selection" name="status">
+				<option value="Ditolak" @if($formAntrian->status=='Ditolak') selected='selected' @endif >Ditolak</option>
+				<option value="Diterima" @if($formAntrian->status=='Diterima') selected='selected' @endif >Diterima</option>
+			</select>
+		</div>
 	@endif
 {!! form()->action([
     form()->submit('Simpan'),

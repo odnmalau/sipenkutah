@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'brand_name' => env('APP_NAME', 'Laravolt'),
-    'brand_image' => env('APP_URL').'/img/app.png',
+    'brand_name' => env('APP_NAME'),
+    'brand_image' => "https://www.kemenkumham.go.id/images/jux_portfolio_pro/logo_fix.png",
     'font_size' => 'small',
 
     /*
@@ -54,5 +54,6 @@ return [
         'brown' => '#A5673F',
         'grey' => '#767676',
         'black' => '#1B1C1D',
+        'kemenkumham' => '#252459',
     ],
 ];

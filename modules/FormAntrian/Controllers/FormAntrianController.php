@@ -2,6 +2,7 @@
 
 namespace Modules\FormAntrian\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\FormAntrian\Requests\Store;
 use Modules\FormAntrian\Requests\Update;
@@ -28,16 +29,14 @@ class FormAntrianController extends Controller
     {
         $attr = $request->validated();
 
-        $laki = $request->input('laki-laki');
-        $perempuan = $request->input('perempuan');
-        $anak = $request->input('anak-anak');
-        $total_pengikut = $laki + $perempuan + $anak;
+        $total_pengikut = $this->calcPengikut($request);
 
         $no = FormAntrian::count();
+
         $attr['no_antrian'] = date('dmY') . ++$no;
         $attr['total_pengikut'] = $total_pengikut;
         $attr['user_id'] = auth()->id();
-        $attr['id_napi'] = request('napi');
+        $attr['id_napi'] = request('id_napi');
 
         FormAntrian::create($attr);
 
@@ -59,7 +58,12 @@ class FormAntrianController extends Controller
 
     public function update(Update $request, FormAntrian $formAntrian)
     {
-        $formAntrian->update($request->validated());
+        $attr = $request->validated();
+
+        $total_pengikut = $this->calcPengikut($request);
+        $attr['total_pengikut'] = $total_pengikut;
+
+        $formAntrian->update($attr);
 
         return redirect()->back()->withSuccess('FormAntrian saved');
     }
@@ -71,8 +75,20 @@ class FormAntrianController extends Controller
         return redirect()->back()->withSuccess('FormAntrian deleted');
     }
 
-    protected function calcPengikut()
+    protected function calcPengikut(Store $request)
     {
+        $laki = $request->input('laki-laki');
+        $perempuan = $request->input('perempuan');
+        $anak = $request->input('anak-anak');
+        return $laki + $perempuan + $anak;
+    }
 
+    public function statusChanges(Request $request)
+    {
+        $user = FormAntrian::findOrFail($request->id);
+        $user->status = $request->status;
+        $user->save();
+
+        return response()->json(['message' => 'Status berhasil diperbarui.']);
     }
 }
