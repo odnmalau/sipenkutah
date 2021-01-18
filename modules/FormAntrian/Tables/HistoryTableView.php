@@ -2,9 +2,9 @@
 
 namespace Modules\FormAntrian\Tables;
 
+use Laravolt\Suitable\Columns\Checkall;
 use Laravolt\Suitable\Columns\Date;
 use Laravolt\Suitable\Columns\Label;
-use Laravolt\Suitable\Columns\Checkall;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\TableView;

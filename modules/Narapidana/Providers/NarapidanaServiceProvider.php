@@ -2,7 +2,6 @@
 
 namespace Modules\Narapidana\Providers;
 
-use Illuminate\Database\Eloquent\Factory;
 use Laravolt\Support\Base\BaseServiceProvider;
 
 class NarapidanaServiceProvider extends BaseServiceProvider

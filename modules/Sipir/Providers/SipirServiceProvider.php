@@ -2,7 +2,6 @@
 
 namespace Modules\Sipir\Providers;
 
-use Illuminate\Database\Eloquent\Factory;
 use Laravolt\Support\Base\BaseServiceProvider;
 
 class SipirServiceProvider extends BaseServiceProvider

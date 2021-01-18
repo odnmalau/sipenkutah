@@ -4,7 +4,6 @@ namespace Modules\FormAntrian\Tables;
 
 use Laravolt\Suitable\Columns\Checkall;
 use Laravolt\Suitable\Columns\Date;
-use Laravolt\Suitable\Columns\Label;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
@@ -36,13 +35,13 @@ class FormAntrianTableView extends TableView
                 return $formAntrian->napi->nama_lengkap;
             }, 'Napi Kunjungan')->sortable(),
             Raw::make(function ($formAntrian) {
-                if ($formAntrian->status == "Diterima") {
+                if ($formAntrian->status == 'Diterima') {
                     return "<input type='checkbox' data-id='{$formAntrian->id}' name='status'  class='js-switch' checked>";
                 } else {
                     return "<input type='checkbox' data-id='{$formAntrian->id}' name='status'  class='js-switch'>";
                 }
             }, 'Status'),
-            RestfulButton::make('modules::form-antrian')->only("delete", "view"),
+            RestfulButton::make('modules::form-antrian')->only('delete', 'view'),
         ];
     }
 }

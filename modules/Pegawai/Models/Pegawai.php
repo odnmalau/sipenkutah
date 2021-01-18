@@ -15,7 +15,7 @@ class Pegawai extends Model
 
     protected $guarded = [];
 
-    protected $searchableColumns = ["nip", "nama", "golongan", "jabatan", "alamat", "no_telp", "foto",];
+    protected $searchableColumns = ['nip', 'nama', 'golongan', 'jabatan', 'alamat', 'no_telp', 'foto'];
 
     protected $primaryKey = 'nip';
 
@@ -26,6 +26,6 @@ class Pegawai extends Model
 
     public function getTakeImageAttribute()
     {
-        return "/storage/" . $this->foto;
+        return '/storage/'.$this->foto;
     }
 }

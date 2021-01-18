@@ -2,7 +2,6 @@
 
 namespace Modules\Pengunjung\Providers;
 
-use Illuminate\Database\Eloquent\Factory;
 use Laravolt\Support\Base\BaseServiceProvider;
 
 class PengunjungServiceProvider extends BaseServiceProvider

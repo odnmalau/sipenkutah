@@ -16,7 +16,7 @@ class Narapidana extends Model
 
     protected $guarded = [];
 
-    protected $searchableColumns = ["kewarganegaraan", "no_identitas", "nama_lengkap", "alamat", "tgl_lahir", "perkara", "tgl_masuk", "tahun", "bulan", "hari", "lama_pidana", "blok",];
+    protected $searchableColumns = ['kewarganegaraan', 'no_identitas', 'nama_lengkap', 'alamat', 'tgl_lahir', 'perkara', 'tgl_masuk', 'tahun', 'bulan', 'hari', 'lama_pidana', 'blok'];
 
     public function setKewarganegaraanAttribute($value)
     {

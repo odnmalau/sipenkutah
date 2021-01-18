@@ -2,7 +2,6 @@
 
 namespace Modules\FormAntrian\Providers;
 
-use Illuminate\Database\Eloquent\Factory;
 use Laravolt\Support\Base\BaseServiceProvider;
 
 class FormAntrianServiceProvider extends BaseServiceProvider

@@ -3,9 +3,9 @@
 namespace Modules\Narapidana\Controllers;
 
 use Illuminate\Routing\Controller;
+use Modules\Narapidana\Models\Narapidana;
 use Modules\Narapidana\Requests\Store;
 use Modules\Narapidana\Requests\Update;
-use Modules\Narapidana\Models\Narapidana;
 use Modules\Narapidana\Tables\NarapidanaTableView;
 
 class NarapidanaController extends Controller

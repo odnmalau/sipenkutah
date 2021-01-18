@@ -17,7 +17,7 @@ class FormAntrian extends Model
 
     protected $guarded = [];
 
-    protected $searchableColumns = ["no_antrian", "tgl_kunjungan", "waktu", "laki-laki", "perempuan", "anak-anak", "total_pengikut", "jenis_barang", "jumlah", "keterangan", "status", "id_napi", "updated_by"];
+    protected $searchableColumns = ['no_antrian', 'tgl_kunjungan', 'waktu', 'laki-laki', 'perempuan', 'anak-anak', 'total_pengikut', 'jenis_barang', 'jumlah', 'keterangan', 'status', 'id_napi', 'updated_by'];
 
     public function pengunjung()
     {

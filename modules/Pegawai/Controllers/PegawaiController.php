@@ -5,9 +5,9 @@ namespace Modules\Pegawai\Controllers;
 use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
+use Modules\Pegawai\Models\Pegawai;
 use Modules\Pegawai\Requests\Store;
 use Modules\Pegawai\Requests\Update;
-use Modules\Pegawai\Models\Pegawai;
 use Modules\Pegawai\Tables\PegawaiTableView;
 
 class PegawaiController extends Controller
@@ -29,7 +29,7 @@ class PegawaiController extends Controller
         $foto = request()->file('foto');
         if ($foto) {
             $fileName = time().'_'.$foto->getClientOriginalName();
-            $pathToFile = $foto->storeAs("pegawai", $fileName, 'public');
+            $pathToFile = $foto->storeAs('pegawai', $fileName, 'public');
         } else {
             $pathToFile = null;
         }
@@ -40,9 +40,9 @@ class PegawaiController extends Controller
         if ($pegawai) {
             $user = User::create([
                 'name' => $pegawai['nama'],
-                'email' => str_replace(' ', '', strtolower($pegawai->nama) . '.pegawai@spkt.com'),
-                'status' => "ACTIVE",
-                'timezone' => "Asia/Jakarta",
+                'email' => str_replace(' ', '', strtolower($pegawai->nama).'.pegawai@spkt.com'),
+                'status' => 'ACTIVE',
+                'timezone' => 'Asia/Jakarta',
                 'password' => bcrypt($pegawai['no_telp']),
             ]);
             $user->assignRole('Pegawai');
@@ -69,7 +69,7 @@ class PegawaiController extends Controller
         if ($foto) {
             Storage::disk('public')->delete($pegawai->foto);
             $fileName = time().'_'.$foto->getClientOriginalName();
-            $pathToFile = $foto->storeAs("pegawai", $fileName, 'public');
+            $pathToFile = $foto->storeAs('pegawai', $fileName, 'public');
         } else {
             $pathToFile = $pegawai->foto;
         }

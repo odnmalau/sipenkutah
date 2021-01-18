@@ -7,9 +7,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Modules\Pengunjung\Mail\AccountInformation;
+use Modules\Pengunjung\Models\Pengunjung;
 use Modules\Pengunjung\Requests\Store;
 use Modules\Pengunjung\Requests\Update;
-use Modules\Pengunjung\Models\Pengunjung;
 use Modules\Pengunjung\Tables\PengunjungTableView;
 
 class PengunjungController extends Controller
@@ -31,7 +31,7 @@ class PengunjungController extends Controller
         $upload_identitas = request()->file('upload_identitas');
         if ($upload_identitas) {
             $fileName = time().'_'.$upload_identitas->getClientOriginalName();
-            $pathToFile = $upload_identitas->storeAs("pengunjung", $fileName, 'public');
+            $pathToFile = $upload_identitas->storeAs('pengunjung', $fileName, 'public');
         } else {
             $pathToFile = null;
         }
@@ -43,8 +43,8 @@ class PengunjungController extends Controller
             $user = User::create([
                 'name' => $pengunjung['nama_lengkap'],
                 'email' => $pengunjung['email'],
-                'status' => "ACTIVE",
-                'timezone' => "Asia/Jakarta",
+                'status' => 'ACTIVE',
+                'timezone' => 'Asia/Jakarta',
                 'password' => bcrypt($pengunjung['no_hp']),
             ]);
             $user->assignRole('Pengunjung');
@@ -72,7 +72,7 @@ class PengunjungController extends Controller
         if ($upload_identitas) {
             Storage::disk('public')->delete($pengunjung->upload_identitas);
             $fileName = time().'_'.$upload_identitas->getClientOriginalName();
-            $pathToFile = $upload_identitas->storeAs("pengunjung", $fileName, 'public');
+            $pathToFile = $upload_identitas->storeAs('pengunjung', $fileName, 'public');
         } else {
             $pathToFile = $pengunjung->upload_identitas;
         }

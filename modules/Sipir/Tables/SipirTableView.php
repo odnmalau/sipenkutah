@@ -3,7 +3,6 @@
 namespace Modules\Sipir\Tables;
 
 use Laravolt\Suitable\Columns\Date;
-use Laravolt\Suitable\Columns\Html;
 use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;

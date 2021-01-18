@@ -5,9 +5,9 @@ namespace Modules\Sipir\Controllers;
 use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
+use Modules\Sipir\Models\Sipir;
 use Modules\Sipir\Requests\Store;
 use Modules\Sipir\Requests\Update;
-use Modules\Sipir\Models\Sipir;
 use Modules\Sipir\Tables\SipirTableView;
 
 class SipirController extends Controller
@@ -29,7 +29,7 @@ class SipirController extends Controller
         $foto = request()->file('foto');
         if ($foto) {
             $fileName = time().'_'.$foto->getClientOriginalName();
-            $pathToFile = $foto->storeAs("sipir", $fileName, 'public');
+            $pathToFile = $foto->storeAs('sipir', $fileName, 'public');
         } else {
             $pathToFile = null;
         }
@@ -40,9 +40,9 @@ class SipirController extends Controller
         if ($sipir) {
             $user = User::create([
                 'name' => $sipir['nama'],
-                'email' => str_replace(' ', '', strtolower($sipir->nama) . '.sipir@spkt.com'),
-                'status' => "ACTIVE",
-                'timezone' => "Asia/Jakarta",
+                'email' => str_replace(' ', '', strtolower($sipir->nama).'.sipir@spkt.com'),
+                'status' => 'ACTIVE',
+                'timezone' => 'Asia/Jakarta',
                 'password' => bcrypt($sipir['no_telp']),
             ]);
             $user->assignRole('Sipir');
@@ -69,7 +69,7 @@ class SipirController extends Controller
         if ($foto) {
             Storage::disk('public')->delete($sipir->foto);
             $fileName = time().'_'.$foto->getClientOriginalName();
-            $pathToFile = $foto->storeAs("sipir", $fileName, 'public');
+            $pathToFile = $foto->storeAs('sipir', $fileName, 'public');
         } else {
             $pathToFile = $sipir->foto;
         }
