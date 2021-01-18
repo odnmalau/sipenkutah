@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravolt\Support\Traits\AutoFilter;
 use Laravolt\Support\Traits\AutoSort;
+use Modules\FormAntrian\Models\FormAntrian;
+use Modules\History\Models\History;
 
 class User extends \Laravolt\Platform\Models\User
 {
@@ -24,4 +26,9 @@ class User extends \Laravolt\Platform\Models\User
     ];
 
     protected $fillable = ['name', 'email', 'username', 'password', 'status', 'timezone'];
+
+    public function history()
+    {
+        return $this->hasMany(History::class);
+    }
 }

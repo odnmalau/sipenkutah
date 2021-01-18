@@ -11,5 +11,7 @@ Route::group(
     function () {
         Route::resource('form-antrian', FormAntrianController::class);
         Route::get('/status-changes', [FormAntrianController::class, 'statusChanges'])->name('statusChanges');
+        Route::get('/history', [FormAntrianController::class, 'history'])->name('form-antrian.history');
+        Route::get('/history/pdf/{daterange}', [FormAntrianController::class, 'historyReportPdf'])->name('form-antrian.history.pdf');
     }
 );

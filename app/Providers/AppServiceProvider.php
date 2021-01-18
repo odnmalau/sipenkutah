@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Observers\FormAntrianObserver;
 use Illuminate\Support\ServiceProvider;
+use Modules\FormAntrian\Models\FormAntrian;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        FormAntrian::observe(FormAntrianObserver::class);
     }
 }

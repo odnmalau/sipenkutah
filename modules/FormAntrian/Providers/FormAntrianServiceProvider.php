@@ -30,5 +30,12 @@ class FormAntrianServiceProvider extends BaseServiceProvider
                 ->data('permission', $this->config['permission'] ?? [])
                 ->active('modules/form-antrian/*');
         });
+        app('laravolt.menu.sidebar')->register(function ($menu) {
+            $menu->modules
+                ->add('History', route('modules::form-antrian.history'))
+                ->data('icon', 'chart bar outline')
+                ->data('permission', $this->config['permission'] ?? [])
+                ->active('modules/history/*');
+        });
     }
 }

@@ -17,7 +17,7 @@ class FormAntrian extends Model
 
     protected $guarded = [];
 
-    protected $searchableColumns = ["no_antrian", "tgl_kunjungan", "waktu", "laki-laki", "perempuan", "anak-anak", "total_pengikut", "jenis_barang", "jumlah", "keterangan", "status", "id_napi",];
+    protected $searchableColumns = ["no_antrian", "tgl_kunjungan", "waktu", "laki-laki", "perempuan", "anak-anak", "total_pengikut", "jenis_barang", "jumlah", "keterangan", "status", "id_napi", "updated_by"];
 
     public function pengunjung()
     {
@@ -27,5 +27,10 @@ class FormAntrian extends Model
     public function napi()
     {
         return $this->belongsTo(Narapidana::class, 'id_napi');
+    }
+
+    public function getUpdatedByNameAttribute()
+    {
+        return User::where('id', $this->updated_by)->pluck('name')->first();
     }
 }

@@ -2,15 +2,20 @@
 
 namespace Modules\FormAntrian\Controllers;
 
+use PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Laravolt\Suitable\Builder;
 use Modules\FormAntrian\Mail\ConfirmationRejected;
 use Modules\FormAntrian\Mail\ConfirmationSuccess;
 use Modules\FormAntrian\Requests\Store;
 use Modules\FormAntrian\Requests\Update;
 use Modules\FormAntrian\Models\FormAntrian;
 use Modules\FormAntrian\Tables\FormAntrianTableView;
+use Modules\FormAntrian\Tables\HistoryTableView;
 use Modules\Narapidana\Models\Narapidana;
 
 class FormAntrianController extends Controller
@@ -90,24 +95,60 @@ class FormAntrianController extends Controller
     {
         $formAntrian = FormAntrian::findOrFail($request->id);
         $formAntrian->status = $request->status;
-        $formAntrian->save();
+        $formAntrian->updated_by = auth()->id();
+        $formAntrian->update();
 
-        $instance = FormAntrian::first();
+        // $instance = FormAntrian::first();
 
-        $pass = [
-            'nama_pengunjung' => $instance->pengunjung->name,
-            'nama_napi' => $instance->napi->nama_lengkap,
-            'tgl_kunjungan' => $instance->tgl_kunjungan,
-            'waktu' => $instance->waktu,
-            'no_antrian' => $instance->no_antrian,
-        ];
+        // $pass = [
+        //     'nama_pengunjung' => $instance->pengunjung->name,
+        //     'nama_napi' => $instance->napi->nama_lengkap,
+        //     'tgl_kunjungan' => $instance->tgl_kunjungan,
+        //     'waktu' => $instance->waktu,
+        //     'no_antrian' => $instance->no_antrian,
+        // ];
 
-        if ($instance->status == "Ditolak") {
-            Mail::to($instance->pengunjung->email)->send(new ConfirmationRejected($pass));
-        } else {
-            Mail::to($instance->pengunjung->email)->send(new ConfirmationSuccess($pass));
-        }
+        // if ($instance->status == "Ditolak") {
+        //     Mail::to($instance->pengunjung->email)->send(new ConfirmationRejected($pass));
+        // } else {
+        //     Mail::to($instance->pengunjung->email)->send(new ConfirmationSuccess($pass));
+        // }
 
         return response()->json(['message' => 'Status berhasil diperbarui.']);
+    }
+
+    public function history()
+    {
+        $start = Carbon::now()->startOfMonth()->format('Y-m-d H:i:s');
+        $end = Carbon::now()->endOfMonth()->format('Y-m-d H:i:s');
+
+        if (request()->date != '') {
+            $date = explode(' - ' ,request()->date);
+            $start = Carbon::parse($date[0])->format('Y-m-d') . ' 00:00:01';
+            $end = Carbon::parse($date[1])->format('Y-m-d') . ' 23:59:59';
+        }
+
+        $report = FormAntrian::whereBetween('created_at', [$start, $end])->get();
+
+        return HistoryTableView::make()
+            ->decorate(function (Builder $table) {
+                    $table->getDefaultSegment()->appendLeft(view('form-antrian::components.filter-range')->render());
+                })
+            ->view('form-antrian::history', compact('report'));
+    }
+
+    public function historyReportPdf($daterange)
+    {
+        $date = explode('+', $daterange);
+
+        $start = Carbon::parse($date[0])->format('Y-m-d') . ' 00:00:01';
+        $end = Carbon::parse($date[1])->format('Y-m-d') . ' 23:59:59';
+
+        $report = FormAntrian::whereBetween('created_at', [$start, $end])
+            ->get();
+
+        $pdf = PDF::loadView('form-antrian::report-pdf', compact('report', 'date'));
+
+        return $pdf->stream();
     }
 }

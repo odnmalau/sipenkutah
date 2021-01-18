@@ -26,6 +26,7 @@ class Store extends FormRequest
             'keterangan' => [''],
             'status' => ['nullable'],
             'id_napi' => [''],
+            'updated_by' => [''],
         ];
     }
 
