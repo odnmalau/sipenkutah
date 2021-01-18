@@ -2,7 +2,7 @@
 
 return [
     'brand_name' => env('APP_NAME'),
-    'brand_image' => "https://www.kemenkumham.go.id/images/jux_portfolio_pro/logo_fix.png",
+    'brand_image' => 'https://www.kemenkumham.go.id/images/jux_portfolio_pro/logo_fix.png',
     'font_size' => 'small',
 
     /*

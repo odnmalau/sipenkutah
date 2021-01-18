@@ -1,7 +1,5 @@
 <?php
 
-use Modules\Napi\Providers\NapiServiceProvider;
-
 return [
 
     /*

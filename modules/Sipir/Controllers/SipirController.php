@@ -35,9 +35,8 @@ class SipirController extends Controller
         }
 
         $attr['foto'] = $pathToFile;
-        $sipir = Sipir::create($attr);
 
-        if ($sipir) {
+        if ($sipir = Sipir::create($attr)) {
             $user = User::create([
                 'name' => $sipir['nama'],
                 'email' => str_replace(' ', '', strtolower($sipir->nama).'.sipir@spkt.com'),

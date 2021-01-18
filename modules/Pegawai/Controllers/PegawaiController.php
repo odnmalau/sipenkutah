@@ -35,9 +35,8 @@ class PegawaiController extends Controller
         }
 
         $attr['foto'] = $pathToFile;
-        $pegawai = Pegawai::create($attr);
 
-        if ($pegawai) {
+        if ($pegawai = Pegawai::create($attr)) {
             $user = User::create([
                 'name' => $pegawai['nama'],
                 'email' => str_replace(' ', '', strtolower($pegawai->nama).'.pegawai@spkt.com'),

@@ -37,9 +37,8 @@ class PengunjungController extends Controller
         }
 
         $attr['upload_identitas'] = $pathToFile;
-        $pengunjung = Pengunjung::create($attr);
 
-        if ($pengunjung) {
+        if ($pengunjung = Pengunjung::create($attr)) {
             $user = User::create([
                 'name' => $pengunjung['nama_lengkap'],
                 'email' => $pengunjung['email'],
