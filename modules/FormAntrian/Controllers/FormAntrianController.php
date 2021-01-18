@@ -92,7 +92,7 @@ class FormAntrianController extends Controller
         $formAntrian->status = $request->status;
         $formAntrian->save();
 
-        $instance = FormAntrian::all();
+        $instance = FormAntrian::first();
 
         $pass = [
             'nama_pengunjung' => $instance->pengunjung->name,
@@ -102,7 +102,7 @@ class FormAntrianController extends Controller
             'no_antrian' => $instance->no_antrian,
         ];
 
-        if ($request->status == "Ditolak") {
+        if ($instance->status == "Ditolak") {
             Mail::to($instance->pengunjung->email)->send(new ConfirmationRejected($pass));
         } else {
             Mail::to($instance->pengunjung->email)->send(new ConfirmationSuccess($pass));

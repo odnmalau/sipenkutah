@@ -4,9 +4,9 @@
     @endcomponent
 
     @component('laravolt::mail.message', ['pass' => $pass])
-        Terkait pengajuan kunjungan tahanan {{ $pass['nama_napi'] }} yang Anda ajukan pada
-        {{ $pass['tgl_kunjungan'] }} - {{ $pass['waktu'] }} Kami tolak dikarenakan kuota untuk hari dan
-        waktu tersebut sudah melewati batas.
+        Terkait pengajuan kunjungan tahanan {{ $pass['nama_napi'] }} yang Anda ajukan pada<br>
+        {{ $pass['tgl_kunjungan'] }} - {{ $pass['waktu'] }} Kami tolak dikarenakan kuota untuk hari dan<br>
+        waktu tersebut sudah melewati batas.<br>
         Silahkan membuat pengajuan antrian kembali melalui tombol dibawah ini Terima Kasih.
     @endcomponent
 
