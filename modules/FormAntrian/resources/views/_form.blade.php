@@ -60,6 +60,7 @@
 		<div class="field">
 			<label>Status</label>
 			<select class="ui dropdown search clearable selection" name="status">
+				<option value="Proses" @if($formAntrian->status=='Proses') selected='selected' @endif>Proses</option>
 				<option value="Ditolak" @if($formAntrian->status=='Ditolak') selected='selected' @endif >Ditolak</option>
 				<option value="Diterima" @if($formAntrian->status=='Diterima') selected='selected' @endif >Diterima</option>
 			</select>

@@ -34,6 +34,7 @@ class HistoryTableView extends TableView
                 return $formAntrian->napi->nama_lengkap;
             }, 'Napi Kunjungan')->sortable(),
             Label::make('status')
+                ->addClassIf('Proses', 'grey')
                 ->addClassIf('Ditolak', 'red')
                 ->addClassIf('Diterima', 'blue')->sortable(),
             Raw::make(function ($formAntrian) {

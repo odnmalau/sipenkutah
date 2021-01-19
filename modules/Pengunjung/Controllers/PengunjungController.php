@@ -50,7 +50,7 @@ class PengunjungController extends Controller
             Mail::to($pengunjung['email'])->send(new AccountInformation());
         }
 
-        return redirect('modules/form-antrian/create')->withSuccess('Pengunjung saved');
+        return redirect('auth/login')->withSuccess('Pengunjung saved');
     }
 
     public function show(Pengunjung $pengunjung)

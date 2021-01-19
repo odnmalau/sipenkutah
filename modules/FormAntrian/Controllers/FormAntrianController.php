@@ -47,6 +47,10 @@ class FormAntrianController extends Controller
 
         FormAntrian::create($attr);
 
+        if (auth()->user()->hasRole(['Pengunjung'])) {
+            return redirect()->back()->withSuccess('Kamu akan mendapatkan email dari petugas, jika pendaftaran kamu berhasil.');
+        }
+
         return redirect()->back()->withSuccess('FormAntrian saved');
     }
 
@@ -96,25 +100,45 @@ class FormAntrianController extends Controller
         $formAntrian = FormAntrian::findOrFail($request->id);
         $formAntrian->status = $request->status;
         $formAntrian->updated_by = auth()->id();
-        $formAntrian->update();
 
-        // $instance = FormAntrian::first();
+        if ($formAntrian->update()) {
+            $pass = [
+                'nama_pengunjung' => $formAntrian->pengunjung->name,
+                'nama_napi' => $formAntrian->napi->nama_lengkap,
+                'tgl_kunjungan' => $formAntrian->tgl_kunjungan,
+                'waktu' => $formAntrian->waktu,
+                'no_antrian' => $formAntrian->no_antrian,
+            ];
 
-        // $pass = [
-        //     'nama_pengunjung' => $instance->pengunjung->name,
-        //     'nama_napi' => $instance->napi->nama_lengkap,
-        //     'tgl_kunjungan' => $instance->tgl_kunjungan,
-        //     'waktu' => $instance->waktu,
-        //     'no_antrian' => $instance->no_antrian,
-        // ];
+            Mail::to($formAntrian->pengunjung->email)->send(new ConfirmationSuccess($pass));
 
-        // if ($instance->status == "Ditolak") {
-        //     Mail::to($instance->pengunjung->email)->send(new ConfirmationRejected($pass));
-        // } else {
-        //     Mail::to($instance->pengunjung->email)->send(new ConfirmationSuccess($pass));
-        // }
+            return response()->json(['message' => 'Status berhasil diperbarui dan pengunjung sudah mendapatkan email.']);
+        }
 
-        return response()->json(['message' => 'Status berhasil diperbarui.']);
+        return response()->json(['message' => 'Status berhasil diperbarui dan pengunjung gagal mendapatkan email.']);
+    }
+
+    public function statusChangesReject(Request $request)
+    {
+        $formAntrian = FormAntrian::findOrFail($request->id);
+        $formAntrian->status = $request->status;
+        $formAntrian->updated_by = auth()->id();
+
+        if ($formAntrian->update()) {
+            $pass = [
+                'nama_pengunjung' => $formAntrian->pengunjung->name,
+                'nama_napi' => $formAntrian->napi->nama_lengkap,
+                'tgl_kunjungan' => $formAntrian->tgl_kunjungan,
+                'waktu' => $formAntrian->waktu,
+                'no_antrian' => $formAntrian->no_antrian,
+            ];
+
+            Mail::to($formAntrian->pengunjung->email)->send(new ConfirmationRejected($pass));
+
+            return response()->json(['message' => 'Status berhasil diperbarui dan pengunjung sudah mendapatkan email.']);
+        }
+
+        return response()->json(['message' => 'Status berhasil diperbarui dan pengunjung gagal mendapatkan email.']);
     }
 
     public function history()

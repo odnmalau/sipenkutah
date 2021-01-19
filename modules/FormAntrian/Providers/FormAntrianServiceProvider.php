@@ -33,7 +33,7 @@ class FormAntrianServiceProvider extends BaseServiceProvider
             $menu->modules
                 ->add('History', route('modules::form-antrian.history'))
                 ->data('icon', 'chart bar outline')
-                ->data('permission', $this->config['permission'] ?? [])
+                ->data('permission', 'manage-history')
                 ->active('modules/history/*');
         });
     }

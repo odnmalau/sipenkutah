@@ -25,7 +25,7 @@
 
         $(document).ready(function(){
             $('.js-switch').change(function () {
-                let status = $(this).prop('checked') === true ? "Diterima" : "Ditolak";
+                let status = $(this).prop('checked') == true ? "Diterima" : "Ditolak";
                 let id = $(this).data('id');
                 $.ajax({
                     type: "GET",
@@ -34,6 +34,31 @@
                     data: {'status': status, 'id': id},
                     success: function (data) {
                         $('body').toast({"class":"black","message":data.message,"closeIcon":false,"displayTime":"auto","minDisplayTime":3000,"opacity":1,"position":"top center","compact":false,"showIcon":"green checkmark","showProgress":"bottom","progressUp":false,"pauseOnHover":true,"newestOnTop":true,"transition":{"showMethod":"fade","showDuration":2000,"hideMethod":"fly down","hideDuration":3000},"classProgress":"green"});
+                        location.reload()
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        let elemsReject = Array.prototype.slice.call(document.querySelectorAll('.js-switch-reject'));
+
+        elemsReject.forEach(function(html) {
+            let switchery = new Switchery(html, { size: 'small', color: '#1A91DA' });
+        });
+
+        $(document).ready(function(){
+            $('.js-switch-reject').change(function () {
+                let status = $(this).prop('checked') == true ? "Ditolak" : "Diterima";
+                let id = $(this).data('id');
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '{{ route('modules::statusChangesReject') }}',
+                    data: {'status': status, 'id': id},
+                    success: function (data) {
+                        $('body').toast({"class":"black","message":data.message,"closeIcon":false,"displayTime":"auto","minDisplayTime":3000,"opacity":1,"position":"top center","compact":false,"showIcon":"green checkmark","showProgress":"bottom","progressUp":false,"pauseOnHover":true,"newestOnTop":true,"transition":{"showMethod":"fade","showDuration":2000,"hideMethod":"fly down","hideDuration":3000},"classProgress":"green"});
+                        location.reload()
                     }
                 });
             });

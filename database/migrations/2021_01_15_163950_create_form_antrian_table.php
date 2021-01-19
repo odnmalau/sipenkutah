@@ -26,7 +26,7 @@ class CreateFormAntrianTable extends Migration
             $table->string('jenis_barang', 50)->nullable();
             $table->integer('jumlah')->nullable();
             $table->text('keterangan')->nullable();
-            $table->enum('status', ['Diterima', 'Ditolak'])->default('Ditolak')->nullable();
+            $table->enum('status', ['Diterima', 'Ditolak', 'Proses'])->default('Proses')->nullable();
             $table->unsignedBigInteger('id_napi')->nullable();
             $table->timestamps();
         });
