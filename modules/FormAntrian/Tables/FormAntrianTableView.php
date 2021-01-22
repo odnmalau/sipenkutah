@@ -29,18 +29,25 @@ class FormAntrianTableView extends TableView
             Raw::make(function ($formAntrian) {
                 return $formAntrian->pengunjung->name;
             }, 'Pengunjung'),
-            Date::make('tgl_kunjungan')->sortable()->searchable(),
+            Date::make('tgl_kunjungan')->sortable(),
             Text::make('waktu'),
             Raw::make(function ($formAntrian) {
                 return $formAntrian->napi->nama_lengkap;
             }, 'Napi Kunjungan')->sortable(),
             Raw::make(function ($formAntrian) {
                 if ($formAntrian->status == 'Diterima') {
-                    return "<input type='checkbox' data-id='{$formAntrian->id}' name='status'  class='js-switch' checked>";
+                    return "<input type='checkbox' data-id='{$formAntrian->id}' name='status' class='js-switch' checked>";
                 } else {
-                    return "<input type='checkbox' data-id='{$formAntrian->id}' name='status'  class='js-switch'>";
+                    return "<input type='checkbox' data-id='{$formAntrian->id}' name='status' class='js-switch disabled'>";
                 }
-            }, 'Status'),
+            }, 'Diterima'),
+            Raw::make(function ($formAntrian) {
+                if ($formAntrian->status == 'Ditolak') {
+                    return "<input type='checkbox' data-id='{$formAntrian->id}' name='statusReject' class='js-switch-reject' checked>";
+                } else {
+                    return "<input type='checkbox' data-id='{$formAntrian->id}' name='statusReject' class='js-switch-reject disabled'>";
+                }
+            }, 'Ditolak'),
             RestfulButton::make('modules::form-antrian')->only('delete', 'view'),
         ];
     }

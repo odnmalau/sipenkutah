@@ -3,19 +3,25 @@
 @section('content')
 
 <h3 class="ui header horizontal divider m-y-2 m-x-1">@lang('laravolt::auth.register')</h3>
-
+<div class="ui form">
+    <div class="ui message">
+        <div class="header">Kamu akan diarahkan kehalaman login jika registrasi berhasil</div>
+    </div>
+</div><br>
 <form class="ui form" method="POST" action="{{ route('register.pengunjung.store') }}" enctype="multipart/form-data">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
     <div class="ui field input fluid big">
         <input type="text" name="no_identitas" placeholder="No. Identitas" value="{{ old('no_identitas') }}">
     </div>
+    <div class="hint ui red header">Upload Foto Kartu Identitas</div>
     <div class="ui field input fluid big">
         <input type="file" name="upload_identitas" placeholder="Upload Identitas" value="{{ old('upload_identitas') }}">
     </div>
     <div class="ui field input fluid big">
         <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" value="{{ old('nama_lengkap') }}">
     </div>
+    <div class="hint ui red header">Informasi akun login Anda akan dikirimkan petugas melalui email Anda</div>
     <div class="ui field input fluid big">
         <input type="email" name="email" placeholder="Email Address" value="{{ old('email') }}">
     </div>

@@ -17,7 +17,7 @@ class Store extends FormRequest
             'no_identitas' => ['required'],
             'foto' => 'image|mimes:png,jpg,jpeg|max:2048',
             'nama_lengkap' => ['required'],
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'jenis_kelamin' => ['required'],
             'alamat' => ['required'],
             'no_hp' => ['required'],
